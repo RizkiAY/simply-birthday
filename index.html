@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+
+  <title>For you..</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="style.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+</head>
+
+<body>
+<div id="app">
+
+  <!-- SCENE 1 : WALL + DOOR -->
+  <section id="scene-wall" class="scene active" aria-label="A bright wall with a closed door">
+
+    <button id="door" class="door" aria-label="Open the door">
+      <span class="door-frame"></span>
+
+      <span class="doorway">
+        <span class="peek-flame" id="peekFlame">
+          <i></i>
+        </span>
+      </span>
+
+      <span class="door-leaf" id="door-leaf">
+        <span class="door-panel top"></span>
+        <span class="door-panel bottom"></span>
+        <span class="door-knob"></span>
+      </span>
+    </button>
+
+    <p class="hint" id="doorHint">open the door</p>
+
+  </section>
+
+
+  <!-- SCENE 2 : ROOM -->
+  <section id="scene-room" class="scene" aria-label="A dark room">
+
+    <div class="room-sidewall-left"></div>
+    <div class="room-sidewall"></div>
+
+    <button id="switch" class="switch" aria-label="Flip the light switch">
+      <span class="switch-plate"></span>
+      <span class="switch-toggle"></span>
+    </button>
+
+    <div class="room-content">
+
+      <div class="room-interior">
+        <div class="wallpaper"></div>
+      </div>
+
+      <div class="desk">
+
+        <div class="cake-anchor">
+
+          <div
+            class="paper"
+            id="paper"
+            role="button"
+            tabindex="0"
+            aria-label="Read the note"
+            disabled
+          >
+            <span class="paper-fold"></span>
+          </div>
+
+
+          <!-- CAKE -->
+          <button id="cake" class="cake" aria-label="Blow out the candles">
+
+            <!-- TIER BAWAH -->
+            <span class="cake-tier cake-tier-bottom">
+
+              <span class="tier-bottom-body"></span>
+              <span class="tier-bottom-cream"></span>
+
+              <span class="tier-bottom-frosting">
+                <i class="drip drip-1"></i>
+                <i class="drip drip-2"></i>
+                <i class="drip drip-3"></i>
+                <i class="drip drip-4"></i>
+              </span>
+
+            </span>
+
+
+            <!-- TIER ATAS -->
+            <span class="cake-tier cake-tier-top">
+
+              <span class="tier-top-body"></span>
+              <span class="tier-top-cream"></span>
+
+              <span class="tier-top-frosting">
+                <i class="drip drip-1"></i>
+                <i class="drip drip-2"></i>
+                <i class="drip drip-3"></i>
+                <i class="drip drip-4"></i>
+              </span>
+
+
+              <!-- 3 LILIN -->
+
+              <span class="candle candle-1">
+
+                <span class="flame" id="flame">
+                  <i></i>
+                  <span class="smoke" id="smoke"></span>
+                </span>
+
+                <span class="wick"></span>
+                <span class="candle-body small"></span>
+
+              </span>
+
+
+              <span class="candle candle-2">
+
+                <span class="flame">
+                  <i></i>
+                </span>
+
+                <span class="wick"></span>
+                <span class="candle-body small"></span>
+
+              </span>
+
+
+              <span class="candle candle-3">
+
+                <span class="flame">
+                  <i></i>
+                </span>
+
+                <span class="wick"></span>
+                <span class="candle-body small"></span>
+
+              </span>
+
+            </span>
+
+          </button>
+
+          <div class="plate"></div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- MEMORY PHOTOS -->
+    <div class="memory-photos">
+
+      <div class="memory-photo photo-1">
+        <div class="photo-float">
+          <img src="images/pic1.jpg" alt="Img 1">
+        </div>
+      </div>
+
+      <div class="memory-photo photo-2">
+        <div class="photo-float">
+          <img src="images/pic2.jpg" alt="Img 2">
+        </div>
+      </div>
+
+      <div class="memory-photo photo-3">
+        <div class="photo-float">
+          <img src="images/pic3.png" alt="Img 3">
+        </div>
+      </div>
+
+      <div class="memory-photo photo-4">
+        <div class="photo-float">
+          <img src="images/pic4.jpg" alt="Img 4">
+        </div>
+      </div>
+
+      <div class="memory-photo photo-5">
+        <div class="photo-float">
+          <img src="images/pic5.png" alt="Img 5">
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="wind-gust" id="wind-gust"></div>
+
+    <p class="hint room-hint" id="room-hint">
+      find the switch
+    </p>
+
+  </section>
+
+
+  <!-- PAPER OVERLAY -->
+  <div
+    class="paper-overlay"
+    id="paper-overlay"
+    aria-hidden="true"
+  >
+
+    <button
+      class="paper-close"
+      id="paper-close"
+      aria-label="Close the note"
+    >
+      &times;
+    </button>
+
+    <div class="paper-sheet">
+
+      <p class="wish-title">
+        Happy Birthday &lt;3
+      </p>
+
+      <p class="wish-text">
+        Today is your day to be celebrated exactly as you are my birthday girl —
+        the way you light up a room without even trying, the way people feel a
+        little braver and a little happier just from being near you. Take a
+        moment today to see yourself today and realize how bright and how
+        beautiful you are.
+      </p>
+
+      <p class="wish-text">
+        Always remember to take a breather here and there, i know life's just
+        tough sometimes, but i'm not going anywhere and i'll always be there
+        for you — every day, every hour, every minute, every second of my life
+        is all yours.
+      </p>
+
+      <p class="wish-text">
+        Wherever this next year takes you, I hope it's full of soft mornings,
+        easy laughter, and more reasons to feel proud of how far you've come.
+        Keep burning bright, Silly — my world is better lit with you in it.
+      </p>
+
+      <p class="wish-sign">
+        with love, always - your beloved, Rizki
+      </p>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<script>
+(function(){
+
+  var reduceMotion =
+    window.matchMedia &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var door = document.getElementById('door');
+  var doorLeaf = document.getElementById('door-leaf');
+  var doorHint = document.getElementById('doorHint');
+
+  var sceneWall = document.getElementById('scene-wall');
+  var sceneRoom = document.getElementById('scene-room');
+
+  var roomHint = document.getElementById('room-hint');
+  var lightSwitch = document.getElementById('switch');
+
+  var cake = document.getElementById('cake');
+  var flames = document.querySelectorAll('.flame');
+  var smokes = document.querySelectorAll('.smoke');
+
+  var windGust = document.getElementById('wind-gust');
+
+  var paper = document.getElementById('paper');
+  var paperOverlay = document.getElementById('paper-overlay');
+  var paperClose = document.getElementById('paper-close');
+
+  var doorState = 'closed';
+  var lightsOn = false;
+  var candleBlown = false;
+
+  var birthdayAudioCtx = null;
+  var birthdayLoopTimer = null;
+  var birthdayLoopRunning = false;
+
+
+  /* =========================
+     OPEN DOOR
+  ========================= */
+
+  door.addEventListener('click', function(){
+
+    if (doorState === 'closed'){
+
+      doorState = 'opening';
+
+      door.setAttribute(
+        'aria-label',
+        'Door open — tap to enter'
+      );
+
+      doorLeaf.style.transitionDuration =
+        reduceMotion ? '0.2s' : '';
+
+      door.classList.add('open');
+
+      var delay = reduceMotion ? 200 : 850;
+
+      setTimeout(function(){
+
+        doorState = 'peek';
+
+        if (doorHint){
+          doorHint.textContent = 'tap to enter';
+        }
+
+      }, delay);
+
+      return;
+    }
+
+
+    if (doorState === 'peek'){
+
+      doorState = 'entering';
+
+      sceneWall.classList.remove('active');
+      sceneRoom.classList.add('active');
+
+    }
+
+  });
+
+
+  /* =========================
+     LIGHT SWITCH
+  ========================= */
+
+  lightSwitch.addEventListener('click', function(){
+
+    if (lightsOn) return;
+
+    lightsOn = true;
+
+    sceneRoom.classList.add('lit');
+
+    lightSwitch.setAttribute('disabled', 'true');
+
+    lightSwitch.setAttribute(
+      'aria-label',
+      'Lights on'
+    );
+
+    celebrateWithLight();
+
+    if (roomHint){
+
+      roomHint.textContent = 'blow the candle';
+      roomHint.style.display = '';
+
+    }
+
+  });
+
+
+  /* =========================
+     HAPPY BIRTHDAY MELODY
+  ========================= */
+
+  var melody = [
+
+    {f:261.63,d:0.30},
+    {f:261.63,d:0.30},
+    {f:293.66,d:0.60},
+    {f:261.63,d:0.60},
+    {f:349.23,d:0.60},
+    {f:329.63,d:1.10},
+
+    {f:261.63,d:0.30},
+    {f:261.63,d:0.30},
+    {f:293.66,d:0.60},
+    {f:261.63,d:0.60},
+    {f:392.00,d:0.60},
+    {f:349.23,d:1.10},
+
+    {f:261.63,d:0.30},
+    {f:261.63,d:0.30},
+    {f:523.25,d:0.60},
+    {f:440.00,d:0.60},
+    {f:349.23,d:0.60},
+    {f:329.63,d:0.60},
+    {f:293.66,d:1.10},
+
+    {f:466.16,d:0.30},
+    {f:466.16,d:0.30},
+    {f:440.00,d:0.60},
+    {f:349.23,d:0.60},
+    {f:392.00,d:0.60},
+    {f:349.23,d:1.10}
+
+  ];
+
+
+  function totalDuration(){
+
+    var t = 0;
+
+    for (
+      var i = 0;
+      i < melody.length;
+      i++
+    ){
+
+      t += melody[i].d;
+
+    }
+
+    return t;
+
+  }
+
+
+  function getAudioContext(){
+
+    var Ctx =
+      window.AudioContext ||
+      window.webkitAudioContext;
+
+    if (!Ctx) return null;
+
+    if (!birthdayAudioCtx){
+      birthdayAudioCtx = new Ctx();
+    }
+
+    if (birthdayAudioCtx.state === 'suspended'){
+      birthdayAudioCtx.resume();
+    }
+
+    return birthdayAudioCtx;
+
+  }
+
+
+  function playBirthdayPhrase(){
+
+    try{
+
+      var ctx = getAudioContext();
+
+      if (!ctx) return;
+
+      var t = ctx.currentTime + 0.03;
+
+      melody.forEach(function(n){
+
+        var osc = ctx.createOscillator();
+        var gain = ctx.createGain();
+
+        osc.type = 'triangle';
+        osc.frequency.value = n.f;
+
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+
+        var dur = n.d * 0.88;
+
+        gain.gain.setValueAtTime(
+          0.0001,
+          t
+        );
+
+        gain.gain.linearRampToValueAtTime(
+          0.20,
+          t + 0.035
+        );
+
+        gain.gain.exponentialRampToValueAtTime(
+          0.0001,
+          t + dur
+        );
+
+        osc.start(t);
+        osc.stop(t + dur + 0.03);
+
+        t += n.d;
+
+      });
+
+    }catch(e){
+
+      /* audio unavailable */
+
+    }
+
+  }
+
+
+  function startBirthdayLoop(){
+
+    if (birthdayLoopRunning) return;
+
+    birthdayLoopRunning = true;
+
+    function loop(){
+
+      if (!birthdayLoopRunning) return;
+
+      playBirthdayPhrase();
+
+      birthdayLoopTimer = setTimeout(
+        loop,
+        totalDuration() * 1000 + 80
+      );
+
+    }
+
+    loop();
+
+  }
+
+
+  /* =========================
+     BALLOON POP SOUND
+  ========================= */
+
+  function playBalloonPop(){
+
+    try{
+
+      var ctx = getAudioContext();
+
+      if (!ctx) return;
+
+      var now = ctx.currentTime;
+
+      var bufferSize =
+        Math.floor(ctx.sampleRate * 0.16);
+
+      var buffer =
+        ctx.createBuffer(
+          1,
+          bufferSize,
+          ctx.sampleRate
+        );
+
+      var data =
+        buffer.getChannelData(0);
+
+      for (
+        var i = 0;
+        i < bufferSize;
+        i++
+      ){
+
+        var envelope =
+          Math.pow(
+            1 - i / bufferSize,
+            2.8
+          );
+
+        data[i] =
+          (Math.random() * 2 - 1) *
+          envelope;
+
+      }
+
+
+      var source =
+        ctx.createBufferSource();
+
+      var filter =
+        ctx.createBiquadFilter();
+
+      var gain =
+        ctx.createGain();
+
+
+      source.buffer = buffer;
+
+      filter.type = 'bandpass';
+      filter.frequency.value = 1800;
+      filter.Q.value = 0.75;
+
+
+      gain.gain.setValueAtTime(
+        0.0001,
+        now
+      );
+
+      gain.gain.exponentialRampToValueAtTime(
+        0.75,
+        now + 0.008
+      );
+
+      gain.gain.exponentialRampToValueAtTime(
+        0.0001,
+        now + 0.15
+      );
+
+
+      source.connect(filter);
+      filter.connect(gain);
+      gain.connect(ctx.destination);
+
+      source.start(now);
+
+
+      var osc =
+        ctx.createOscillator();
+
+      var oscGain =
+        ctx.createGain();
+
+      osc.type = 'sine';
+
+      osc.frequency.setValueAtTime(
+        110,
+        now
+      );
+
+      osc.frequency.exponentialRampToValueAtTime(
+        48,
+        now + 0.12
+      );
+
+      oscGain.gain.setValueAtTime(
+        0.28,
+        now
+      );
+
+      oscGain.gain.exponentialRampToValueAtTime(
+        0.0001,
+        now + 0.12
+      );
+
+      osc.connect(oscGain);
+      oscGain.connect(ctx.destination);
+
+      osc.start(now);
+      osc.stop(now + 0.13);
+
+    }catch(e){
+
+      /* audio unavailable */
+
+    }
+
+  }
+
+
+  /* =========================
+     CONFETTI
+  ========================= */
+
+  function createConfetti(){
+
+    if (typeof confetti !== 'function') return;
+
+    var duration = 15 * 2000;
+    var animationEnd = Date.now() + duration;
+
+    var skew = 1;
+
+
+    function randomInRange(min, max){
+
+      return Math.random() *
+        (max - min) +
+        min;
+
+    }
+
+
+    (function frame(){
+
+      var timeLeft =
+        animationEnd - Date.now();
+
+      var ticks =
+        Math.max(
+          200,
+          500 * (timeLeft / duration)
+        );
+
+      skew =
+        Math.max(
+          0.8,
+          skew - 0.001
+        );
+
+
+      confetti({
+
+        particleCount: 1,
+
+        startVelocity: 0,
+
+        ticks: ticks,
+
+        origin: {
+          x: Math.random(),
+          y: (Math.random() * skew) - 0.2
+        },
+
+        colors: ['#ffffff'],
+
+        shapes: ['circle'],
+
+        gravity:
+          randomInRange(0.4, 0.6),
+
+        scalar:
+          randomInRange(0.4, 1),
+
+        drift:
+          randomInRange(-0.4, 0.4)
+
+      });
+
+
+      if (timeLeft > 0){
+
+        requestAnimationFrame(frame);
+
+      }
+
+    }());
+
+  }
+
+
+  function celebrateWithLight(){
+
+    playBalloonPop();
+
+    createConfetti();
+
+    setTimeout(function(){
+
+      startBirthdayLoop();
+
+    }, 1500);
+
+  }
+
+
+  /* =========================
+     BLOW OUT CANDLE
+  ========================= */
+
+  cake.addEventListener('click', function(){
+
+    if (!lightsOn || candleBlown) return;
+
+    candleBlown = true;
+
+    cake.setAttribute(
+      'disabled',
+      'true'
+    );
+
+    cake.setAttribute(
+      'aria-label',
+      'Candle blown out'
+    );
+
+
+    windGust.classList.add('blow');
+
+    setTimeout(function(){
+
+      windGust.classList.remove('blow');
+
+    }, 750);
+
+
+    flames.forEach(function(flame){
+
+      flame.classList.add('out');
+
+    });
+
+
+    smokes.forEach(function(smoke){
+
+      smoke.classList.add('go');
+
+    });
+
+
+    if (roomHint){
+
+      roomHint.textContent =
+        'may your wishes come true :)';
+
+      roomHint.style.display = '';
+
+      setTimeout(function(){
+
+        roomHint.style.display = 'none';
+
+      }, 2200);
+
+    }
+
+
+    var revealDelay =
+      reduceMotion ? 200 : 2000;
+
+
+    setTimeout(function(){
+
+      paper.classList.add('show');
+
+      paper.removeAttribute('disabled');
+
+      paper.setAttribute(
+        'tabindex',
+        '0'
+      );
+
+    }, revealDelay);
+
+  });
+
+
+  /* =========================
+     READ NOTE
+  ========================= */
+
+  function openPaper(){
+
+    if (paper.hasAttribute('disabled')){
+      return;
+    }
+
+    paperOverlay.classList.add('show');
+
+    paperOverlay.setAttribute(
+      'aria-hidden',
+      'false'
+    );
+
+    paperClose.focus();
+
+  }
+
+
+  function closePaper(){
+
+    paperOverlay.classList.remove('show');
+
+    paperOverlay.setAttribute(
+      'aria-hidden',
+      'true'
+    );
+
+    paper.focus();
+
+  }
+
+
+  paper.addEventListener(
+    'click',
+    openPaper
+  );
+
+
+  paper.addEventListener(
+    'keydown',
+    function(e){
+
+      if (
+        e.key === 'Enter' ||
+        e.key === ' '
+      ){
+
+        e.preventDefault();
+
+        openPaper();
+
+      }
+
+    }
+  );
+
+
+  paperClose.addEventListener(
+    'click',
+    closePaper
+  );
+
+
+  paperOverlay.addEventListener(
+    'click',
+    function(e){
+
+      if (e.target === paperOverlay){
+
+        closePaper();
+
+      }
+
+    }
+  );
+
+
+  document.addEventListener(
+    'keydown',
+    function(e){
+
+      if (
+        e.key === 'Escape' &&
+        paperOverlay.classList.contains('show')
+      ){
+
+        closePaper();
+
+      }
+
+    }
+  );
+
+})();
+</script>
+
+</body>
+</html>
